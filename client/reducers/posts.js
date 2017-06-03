@@ -1,7 +1,7 @@
-// a reducer takes two things
-
-// 1. the action (info about what happened)
-// 2. copy of current state
+import {
+  SELECT_SUBREDDIT, INVALIDATE_SUBREDDIT,
+  REQUEST_POSTS, RECEIVE_POSTS
+} from '../actions/posts';
 
 function posts(state=[], action) {
   switch(action.type) {
@@ -12,8 +12,20 @@ function posts(state=[], action) {
         ...state.slice(0, i),
         {...state[i], likes: state[i].likes + 1},
         ...state.slice(i + 1)
-      ]
-    default:
+      ];
+	  case REQUEST_POSTS:
+		  return Object.assign({}, state, {
+		  isFetching: true,
+		  didInvalidate: false
+	  });
+	  case RECEIVE_POSTS:
+		  return Object.assign({}, state, {
+		  isFetching: false,
+		  didInvalidate: false,
+		  posts: action.posts,
+		  lastUpdated: action.receivedAt
+	  });
+	  default:
       return state;
   }
   return state;
