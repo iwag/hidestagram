@@ -8,24 +8,25 @@ function posts(state=[], action) {
     case 'INCREMENT_LIKES' :
       console.log("increment likes");
       const i = action.index;
-      return [
-        ...state.slice(0, i),
-        {...state[i], likes: state[i].likes + 1},
-        ...state.slice(i + 1)
-      ];
-	  case REQUEST_POSTS:
-		  return Object.assign({}, state, {
-		  isFetching: true,
-		  didInvalidate: false
-	  });
-	  case RECEIVE_POSTS:
-		  return Object.assign({}, state, {
-		  isFetching: false,
-		  didInvalidate: false,
-		  posts: action.posts,
-		  lastUpdated: action.receivedAt
-	  });
-	  default:
+      return Object.assign({}, state, {
+        posts: [...state.posts.slice(0, i),
+        {...state.posts[i], likes: state.posts[i].likes + 1},
+        ...state.posts.slice(i + 1)]
+
+      });
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+      isFetching: true,
+      didInvalidate: false
+    });
+    case RECEIVE_POSTS:
+      return Object.assign({}, state, {
+      isFetching: false,
+      didInvalidate: false,
+      posts: action.posts,
+      lastUpdated: action.receivedAt
+    });
+    default:
       return state;
   }
   return state;
