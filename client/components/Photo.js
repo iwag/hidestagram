@@ -1,8 +1,15 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Link } from 'react-router';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
+import { incrementLike } from '../actions/actionCreators';
 
-const Photo = React.createClass({
+
+class Photo extends Component {
+  _incrementLike(v) {
+    const { id, i, likes } = this.props;
+   return this.props.dispatch(incrementLike(id, i, likes));
+  }
+
   render() {
     const { post, i, comments } = this.props;
     return (
@@ -21,7 +28,7 @@ const Photo = React.createClass({
           <figcaption>
             <p>{post.caption}</p>
             <div className="control-buttons">
-              <button onClick={this.props.increment.bind(null, i)} className="likes">&hearts; {post.likes}</button>
+              <button onClick={this._incrementLike.bind(this)} className="likes">&hearts; {post.likes}</button>
               <Link className="button" to={`/view/${post.code}`}>
                 <span className="comment-count">
                 <span className="speech-bubble"></span>
@@ -35,6 +42,6 @@ const Photo = React.createClass({
       </figure>
     )
   }
-});
+}
 
 export default Photo;
