@@ -24,7 +24,7 @@ function receivePosts(subpost, json) {
 function fetchPosts(subpost) {
   return dispatch => {
     dispatch(requestPosts(subpost))
-    return fetch(`http://localhost:8080/v1/words.json`)
+    return fetch(`http://localhost:8080/v1/posts.json`)
       .then(response => response.json())
       .then(json => dispatch(receivePosts(subpost, json)))
   }
@@ -33,4 +33,3 @@ function fetchPosts(subpost) {
 export function fetchPostsIfNeeded(subpost) {
       return (dispatch, getState) => {dispatch(fetchPosts(subpost))}
 }
-

@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 import { incrementLike } from '../actions/actionCreators';
 
-
 class Photo extends Component {
   _incrementLike(v) {
-    const { id, i, likes } = this.props;
-   return this.props.dispatch(incrementLike(id, i, likes));
+    const { i, post} = this.props;
+    return this.props.dispatch(incrementLike(post.id, i, post.likes));
   }
 
   render() {
@@ -44,4 +45,8 @@ class Photo extends Component {
   }
 }
 
-export default Photo;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(dispatch);
+}
+
+export default connect(mapDispatchToProps)(Photo);

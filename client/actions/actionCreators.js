@@ -31,14 +31,14 @@ function fetchLikes(id, index, likes) {
       likes: likes +1
     };
     dispatch(requestLikes(id, index))
-    return fetch(`http://localhost:8080/v1/word/${id}/edit.json`, {
+    return fetch(`http://localhost:8080/v1/post/${id}/edit.json`, {
      method:"POST",
      headers: {
+       'Accpet': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(body)
-	})
-    then(response => response.json())
+	}).then(response => response.json())
     .then(json => dispatch(receiveLikes(id, index, json)))
   }
 }
